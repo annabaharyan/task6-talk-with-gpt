@@ -9,8 +9,10 @@ let recognizing;
 
 function reset() {
   recognizing = false;
+  document.querySelector("button").style.color = " rgb(4, 97, 97)";
 }
 recognition.onresult = function (event) {
+  loading();
   fetch("/", {
     method: "POST",
     headers: {
@@ -22,7 +24,10 @@ recognition.onresult = function (event) {
       },
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      loading(res);
+      return res.json();
+    })
     .then((answer) => answerToSpeach(answer.answer));
 };
 
@@ -33,6 +38,7 @@ function toggleStartStop() {
     reset();
   } else {
     recognition.start();
+    document.querySelector("button").style.color = "red";
     console.log("start");
     recognizing = true;
   }
@@ -53,4 +59,13 @@ function answerToSpeach(answ) {
   utterance.rate = 0.7;
   utterance.pitch = 0.4;
   synth.speak(utterance);
+}
+
+function loading(res) {
+
+  if (!res) {
+    document.querySelector("span").classList.add("loader");
+  } else {
+    document.querySelector("span").classList.remove("loader");
+  }
 }
