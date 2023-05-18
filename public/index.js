@@ -52,17 +52,16 @@ function answerToSpeach(answ) {
   let voices = window.speechSynthesis.getVoices();
 
   utterance.voice = voices.filter(function (voice) {
-    return voice.name == "Microsoft David - English (United States)";
+    return voice.name == "Microsoft Zira - English (United States)";
   })[0];
   utterance.lang = "en-US";
   utterance.volume = 1;
-  utterance.rate = 0.7;
-  utterance.pitch = 0.4;
+  utterance.rate = 1.1;
+  utterance.pitch = 1.1;
   synth.speak(utterance);
 }
 
 function loading(res) {
-
   if (!res) {
     document.querySelector("span").classList.add("loader");
   } else {
